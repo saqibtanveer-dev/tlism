@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 
 // Ensure RTL layout for Urdu
 document.body.dir = 'rtl';
@@ -6,7 +7,16 @@ document.body.dir = 'rtl';
 export default function CalculationScreen() {
   const [number, setNumber] = useState('');
   const [ayatHaroof, setAyatHaroof] = useState('');
+  const [maqsad, setMaqsad] = useState('');
+  const [word, setWord] = useState('')
   const [results, setResults] = useState(null);
+
+  const qamariAdads = {
+    'ا': 1,  'ب': 2, 'ج': 3, 'د': 4, 'ه': 5, 'و': 6, 'ز': 7, 'ح': 8, 'ط': 9,
+    'ي': 10, 'ئ': 10, 'ک': 20, 'ل': 30, 'م': 40, 'ن': 50, 'س': 60, 'ع': 70, 'ف': 80, 'ص': 90,
+    'ق': 100, 'ر': 200, 'ش': 300, 'ت': 400, 'ث': 500, 'خ': 600, 'ذ': 700, 'ض': 800,
+    'ظ': 900, 'غ': 1000, 'ة': 400, 'ء': 1,
+  };
 
   const customRoundOff = (num) => {
     const decimal = num - Math.floor(num);
@@ -48,6 +58,9 @@ export default function CalculationScreen() {
     const squaredFinal = final * final;
     const grandFinal = squaredFinal * addRoundedDivBy2;
 
+    const actualFinal = grandFinal * Number(maqsad);
+    console.log("Actual Final Result:", actualFinal);
+
     setResults({
       s1, s2, s3, s4, s5, total,
       divideBy4, multiplyBy2,  divideBy4again,
@@ -56,9 +69,28 @@ export default function CalculationScreen() {
       final,
       digitSum, roundedDiv2, multiplyByDigitSum,
       addRoundedDivBy2, sub51fromFinal, squaredFinal,
-      grandFinal
+      grandFinal, actualFinal
     });
   };
+
+  useEffect(() => {
+    if(!results) {
+      console.log("No results to process");
+      return;
+    };
+    const sub51Str = String(results.sub51fromFinal);
+    const value = sub51Str.split('').reduce((acc, digit, i) => {
+      // Find the first character in qamariAdads whose value matches the digit
+      const char = Object.keys(qamariAdads).find(
+      key => qamariAdads[key] === Number(digit)
+      );
+      return char ? acc + char : acc;
+    }, "");
+
+    setWord(value);
+
+  }, [results]);
+  
 
   return (
     <div style={styles.container}>
@@ -74,9 +106,16 @@ export default function CalculationScreen() {
       <input
         style={styles.input}
         type="number"
-        placeholder="مثلاً: 7"
+        placeholder="مثلاً: 1135"
         value={ayatHaroof}
         onChange={(e) => setAyatHaroof(e.target.value)}
+      />
+      <input
+        style={styles.input}
+        type="number"
+        placeholder="مقصد کی تعداد"
+        value={maqsad}
+        onChange={(e) => setMaqsad(e.target.value)}
       />
 
       <button onClick={handleCalculate} style={styles.button}>
@@ -112,9 +151,10 @@ export default function CalculationScreen() {
           <p>{results.addRoundedDivBy2}</p>
           <p>- 51 = {results.sub51fromFinal}</p>
 
-          <p style={styles.subTitle}>رفشاغایل:</p>
-          <p>{results.final} x {results.final} = {results.squaredFinal}</p>
-          <p style={styles.final}>Grand Final is: {results.grandFinal}</p>
+          <p style={styles.subTitle}><span>{word}</span> یٔل </p>
+          <p>x {results.final} = {results.squaredFinal}</p>
+          <p style={styles.final}>{results.grandFinal}</p>
+          <p style={styles.final}>آخری رقم: {results.actualFinal}</p>
         </div>
       )}
       <div style={{height: '100px'}}></div>
