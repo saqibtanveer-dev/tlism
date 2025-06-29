@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 
 // Ensure RTL layout for Urdu
-document.body.dir = 'rtl';
+// document.body.dir = 'rtl';
 
 export default function CalculationScreen() {
   const [number, setNumber] = useState('');
@@ -125,36 +125,36 @@ export default function CalculationScreen() {
       {results && (
         <div style={styles.resultsContainer}>
           <h2 style={styles.sectionTitle}>مرحلہ 1:</h2>
-          <p>1 = {results.s1}</p>
-          <p>2 = {results.s2}</p>
-          <p>3 = {results.s3}</p>
-          <p>4 = {results.s4}</p>
-          <p>5 = {results.s5}</p>
+          <p className='border-2 border-red-700'><span>{results.s1}</span> = {results.s1} X {results.s1}</p>
+          <p className='border-2 border-red-700'><span>{results.s2}</span> = {results.s2} X {results.s2}</p>
+          <p className='border-2 border-red-700'><span>{results.s3}</span> = {results.s3} X {results.s3}</p>
+          <p className='border-2 border-red-700'><span>{results.s4}</span> = {results.s4} X {results.s4}</p>
+          <p className='border-2 border-red-700'><span>{results.s5}</span> = {number} X {results.s4}</p>
 
-          <p style={styles.subTitle}>مجموعہ = {results.total}</p>
+          <p style={styles.subTitle}>{results.total} = {results.s5} + {results.s4} + {results.s3} + {results.s2} + {results.s1}</p>
 
-          <p>/ 4 = {results.divideBy4}</p>
-          <p>× 2 = {results.multiplyBy2}</p>
-          <p>/ 4 = {results.divideBy4again}</p>
-          <p>÷ 3 = {results.divideBy3}</p>
+          <p>{results.divideBy4} = 4 ÷ {results.s5}</p>
+          <p>{results.multiplyBy2} = 2 x {results.divideBy4}</p>
+          <p>{results.divideBy4again} = 4 ÷ {results.multiplyBy2}</p>
+          <p>{results.divideBy3} = 3 ÷ {results.divideBy4again}</p>
 
           <p style={styles.subTitle}>تفریق:</p>
-          <p>1 = {results.diff1}</p>
-          <p>2 = {results.diff2}</p>
-          <p>3 = {results.diff3}</p>
-          <p>آخری عدد = {results.final}</p>
+          <p>{results.diff1} = {results.divideBy4} - {results.total}</p>
+          <p>{results.diff2} = {results.divideBy4again} - {results.diff1}</p>
+          <p>{results.diff3} = {results.divideBy3} - {results.diff2}</p>
+          <p>{results.final} = 4 + {results.diff3}</p>
 
           <p style={styles.subTitle}>قانون:</p>
-          <p>{results.digitSum}</p>
-          <p>/2 = {results.roundedDiv2}</p>
-          <p>{results.multiplyByDigitSum}</p>
-          <p>{results.addRoundedDivBy2}</p>
-          <p>- 51 = {results.sub51fromFinal}</p>
+          <p>{results.digitSum} = {ayatHaroof} جفر </p>
+          <p>{results.roundedDiv2} = 2 ÷ {results.digitSum}</p>
+          <p>{results.multiplyByDigitSum} = {results.digitSum} x {ayatHaroof}</p>
+          <p>{results.addRoundedDivBy2} = 5 + {results.multiplyByDigitSum}</p>
+          <p>{results.sub51fromFinal} = 51 - {results.final}</p>
 
           <p style={styles.subTitle}><span>{word}</span> یٔل </p>
-          <p>x {results.final} = {results.squaredFinal}</p>
-          <p style={styles.final}>{results.grandFinal}</p>
-          <p style={styles.final}>آخری رقم: {results.actualFinal}</p>
+          <p>{results.squaredFinal} = {results.final} x {results.final}</p>
+          <p style={styles.final}>{results.grandFinal} = طلسم</p>
+          <p style={styles.final}>{results.actualFinal} : آخری رقم </p>
         </div>
       )}
       <div style={{height: '100px'}}></div>
@@ -218,6 +218,7 @@ const styles = {
   subTitle: {
     marginTop: '10px',
     fontWeight: 'bold',
+    fontSize: '24px',
     textAlign: 'right',
     color: '#8b0000',
   },
