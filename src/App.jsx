@@ -28,10 +28,10 @@ export default function CalculationScreen() {
 
     const total = s2 + s3 + s4 + s5;
 
-    const divideBy4 = total / 4;
+    const divideBy4 = Math.trunc(total / 4);
     const multiplyBy2 = 2 * divideBy4;
-    const divideBy4again = multiplyBy2 / 4;
-    const divideBy3 = divideBy4again / 3;
+    const divideBy4again = Math.trunc(multiplyBy2 / 4);
+    const divideBy3 = Math.trunc(divideBy4again / 3);
     const roundedDivide = Math.trunc(divideBy3);
 
     const diff1 = Math.abs(divideBy4 - total);
@@ -40,13 +40,11 @@ export default function CalculationScreen() {
     const final = 4 + diff3;
 
     const digitSum = ayatHaroof.split('').reduce((sum, num) => sum + Number(num), 0)
-    const divBy2 = digitSum / 2;
-    const roundedDiv2 = Math.floor(divBy2);
+    const roundedDiv2 = Math.trunc(digitSum / 2);
     const multiplyByDigitSum = Number(ayatHaroof) * digitSum;
     const addRoundedDivBy2 = multiplyByDigitSum + roundedDiv2;
 
-    const sub51fromFinal = addRoundedDivBy2 - 51;
-
+    const sub51fromFinal = final - 51;
     const squaredFinal = final * final;
     const grandFinal = squaredFinal * addRoundedDivBy2;
 
@@ -56,7 +54,7 @@ export default function CalculationScreen() {
       divideBy3: roundedDivide,
       diff1, diff2, diff3,
       final,
-      digitSum, divBy2, roundedDiv2, multiplyByDigitSum,
+      digitSum, roundedDiv2, multiplyByDigitSum,
       addRoundedDivBy2, sub51fromFinal, squaredFinal,
       grandFinal
     });
@@ -95,6 +93,7 @@ export default function CalculationScreen() {
           <p>5 = {results.s5}</p>
 
           <p style={styles.subTitle}>مجموعہ = {results.total}</p>
+
           <p>/ 4 = {results.divideBy4}</p>
           <p>× 2 = {results.multiplyBy2}</p>
           <p>/ 4 = {results.divideBy4again}</p>
