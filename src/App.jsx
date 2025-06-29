@@ -99,14 +99,14 @@ export default function CalculationScreen() {
       <input
         style={styles.input}
         type="number"
-        placeholder="مثلاً: 7"
+        placeholder="آتشی حروف"
         value={number}
         onChange={(e) => setNumber(e.target.value)}
       />
       <input
         style={styles.input}
         type="number"
-        placeholder="مثلاً: 1135"
+        placeholder="آیت کے حروف"
         value={ayatHaroof}
         onChange={(e) => setAyatHaroof(e.target.value)}
       />
